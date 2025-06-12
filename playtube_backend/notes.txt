@@ -1,0 +1,23 @@
+(I)-----------------------------------------------------------------------------------------------
+    Uploading avatar image using multer(middleware).
+    For Single file  :-
+    (i) const avatarLocalPath = req.file?.path
+    (ii)(.. upload.single("avatar"),updateUserAvatar)
+    
+    
+    
+    
+    For Multiple file :-
+    (i) const avatarLocalpath=req.files?.avatar[0]?.path;
+    (ii)(.. upload.fields([
+            {
+                name:"avatar",
+                maxCount:1,
+            },
+            {
+                name:"coverImage",
+                maxCount:1,
+            }
+        ])
+        ,userRegister)
+    ------------------------------------------------------------------------------------------------
