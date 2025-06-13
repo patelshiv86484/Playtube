@@ -143,7 +143,7 @@ const loginUser=asyncHandler(async(req,res)=>{
           httpOnly:true,//Prevents access via JavaScript (document.cookie cannot read it).
           secure:true,// Ensures cookies are transmitted only over HTTPS(not http), enhancing security.but in localhost it is http
         //   secure: process.env.NODE_ENV === "production",
-        //   sameSite: "Lax",
+          sameSite: "none",
       }
       return res.
       status(202).
@@ -179,7 +179,7 @@ const logoutUser=asyncHandler(async(req,res)=>{
                   httpOnly:true,
                   secure:true,
                 //  secure: process.env.NODE_ENV === "production",
-                //  sameSite: "Lax",
+                 sameSite: "none",
             }
             // console.log("Logged out successfully--------------------------------------------------------------------");
             res.status(201)
