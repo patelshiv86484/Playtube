@@ -25,6 +25,9 @@ import playlistRouter from "./routes/playlist.routes.js"
 import tweetRouter from "./routes/tweet.routes.js"
 import subscriptionRouter from "./routes/subscription.routes.js"
 //routes declaration
+app.get('/ping',(req,res)=>{
+ res.status(200).send('ping successfully');
+})
 app.use("/api/v1/users",userRouter);//here instead of app.get(route,controller) this middleware is used because all are in different folders. 
 app.use("/api/v1/videos",videoRouter);//here instead of app.get(route,controller) this middleware is used because all are in different folders. 
 app.use("/api/v1/comments",commentRouter);
