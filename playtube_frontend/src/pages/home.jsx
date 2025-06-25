@@ -12,9 +12,12 @@ const [videos,setVideos]=useState([])
 const [tweets,setTweets]=useState([])
 const status=useSelector(state=>state.auth.status)
 const text=useSelector(state=>state.search.text)
+const navigate=useNavigate();
 useEffect(()=>{
      setLoader(true);
-     if(!status) return ;
+     if(!status) {
+      navigate("/login")
+     }
      const fetchdata=async()=>{
          const vid=await getVideos({query:text});
          const tweet=await getAllTweet();
@@ -25,7 +28,6 @@ useEffect(()=>{
      setLoader(false)
 
 },[text])
-const navigate=useNavigate();
 
     const play=(vid)=>{
        navigate(`/video/${vid._id}`)

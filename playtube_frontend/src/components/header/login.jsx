@@ -9,7 +9,12 @@ import {LoginDB,getcurrentuser} from '../../ApiCalls/user_auth.js'
 function Login() {
     const navigate=useNavigate();
     const dispatch=useDispatch();
-    const {register,handleSubmit}=useForm();//instead of handling state manually register will keep track of all of this by passing method to handlesubmit().
+    const {register,handleSubmit}=useForm({
+      defaultValues:{
+        email: 'playtube.default@gmail.com',
+        psswrd: 'default123'
+      }
+    });//instead of handling state manually register will keep track of all of this by passing method to handlesubmit().
     const [error,setError] =useState("");
     const login=async (data)=>{
       setError("");

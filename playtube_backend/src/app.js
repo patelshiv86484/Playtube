@@ -6,11 +6,26 @@ const app=express()
 
 //parsing req.body data using app.use()  ---> middleware function for setting middleware.
 //app.use(cors()) Enable CORS for defined origins.
-app.use(cors({
-    origin:process.env.CORS_ORIGIN ,//limits to specific origins only
-    credentials:true,// Allow frontend to send and receive cookies & HTTP authentication
-}))
+// app.use(cors({
+//     origin:process.env.CORS_ORIGIN ,//limits to specific origins only
+//     credentials:true,// Allow frontend to send and receive cookies & HTTP authentication
+// }))
 
+//for solving cold start issue
+const allowedOrigin = process.env.CORS_ORIGIN;
+
+app.use(cors((req, callback) => {
+    let corsOptions;
+    if (req.path === '/ping') {
+        corsOptions = { origin: true }; // Allow all origins for /ping
+    } else {
+        corsOptions = {
+            origin: allowedOrigin,
+            credentials: true
+        };
+    }
+    callback(null, corsOptions);
+}));
 app.use(express.json({limit:"16kb"}));//parse incoming request bodies as JSON(because When a client sends data to the server, even if it's in JSON format, the payload (the body of the HTTP request) is transmitted as a string.), but with a size limit on the body as 16kb.
 app.use(express.urlencoded({extended:true,limit:"16kb"}));//express.urlencoded() middleware will parse the incoming URL-encoded data, converting it into a JavaScript object that can be easily accessed using req.body.
 app.use(express.static("public"))//store favicon and files folder in public(local storage).
@@ -25,9 +40,7 @@ import playlistRouter from "./routes/playlist.routes.js"
 import tweetRouter from "./routes/tweet.routes.js"
 import subscriptionRouter from "./routes/subscription.routes.js"
 //routes declaration
-app.get('/ping',(req,res)=>{
- res.status(200).send('ping successfully');
-})
+
 app.use("/api/v1/users",userRouter);//here instead of app.get(route,controller) this middleware is used because all are in different folders. 
 app.use("/api/v1/videos",videoRouter);//here instead of app.get(route,controller) this middleware is used because all are in different folders. 
 app.use("/api/v1/comments",commentRouter);
